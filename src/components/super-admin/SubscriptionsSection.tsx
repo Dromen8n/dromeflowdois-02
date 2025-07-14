@@ -54,19 +54,19 @@ export function SubscriptionsSection() {
     try {
       setLoading(true);
       
-      // Buscar assinaturas com joins
+      // Buscar billing data com joins
       const { data: subscriptionsData, error } = await supabase
-        .from('franchise_subscriptions')
+        .from('billing_global')
         .select(`
           *,
-          franchise_plans (
-            name,
-            price,
-            billing_cycle
+          planos_sistema!billing_global_plano_id_fkey (
+            nome,
+            preco,
+            tipo
           ),
-          companies (
-            name,
-            key
+          franquias!billing_global_franquia_id_fkey (
+            nome,
+            codigo
           )
         `)
         .order('created_at', { ascending: false });
@@ -75,21 +75,21 @@ export function SubscriptionsSection() {
 
       const formattedData = subscriptionsData?.map(sub => ({
         id: sub.id,
-        company_id: sub.company_id,
-        plan_id: sub.plan_id,
+        company_id: sub.franquia_id,
+        plan_id: sub.plano_id,
         status: sub.status,
-        starts_at: sub.starts_at,
-        expires_at: sub.expires_at,
-        auto_renew: sub.auto_renew,
-        payment_data: sub.payment_data,
+        starts_at: sub.created_at,
+        expires_at: sub.data_vencimento,
+        auto_renew: true,
+        payment_data: { metodo: sub.metodo_pagamento },
         plan: {
-          name: sub.franchise_plans?.name || 'N/A',
-          price: sub.franchise_plans?.price || 0,
-          billing_cycle: sub.franchise_plans?.billing_cycle || 'monthly'
+          name: (sub.planos_sistema as any)?.nome || 'N/A',
+          price: (sub.planos_sistema as any)?.preco || 0,
+          billing_cycle: (sub.planos_sistema as any)?.tipo === 'basico' ? 'monthly' : 'annual'
         },
         company: {
-          name: sub.companies?.name || 'N/A',
-          key: sub.companies?.key || 'N/A'
+          name: (sub.franquias as any)?.nome || 'N/A',
+          key: (sub.franquias as any)?.codigo || 'N/A'
         }
       })) || [];
 

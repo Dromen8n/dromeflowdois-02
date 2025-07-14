@@ -1933,6 +1933,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: Json
       }
+      get_system_settings: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
       get_user_companies: {
         Args: { p_user_id: string }
         Returns: Json
@@ -1989,6 +1993,19 @@ export type Database = {
         Args: { p_name: string; p_key: string; p_document: string }
         Returns: Json
       }
+      super_admin_create_unit: {
+        Args: { p_name: string; p_code: string; p_company_id: string }
+        Returns: Json
+      }
+      super_admin_create_user: {
+        Args: {
+          p_email: string
+          p_name: string
+          p_role: string
+          p_password?: string
+        }
+        Returns: Json
+      }
       super_admin_get_companies: {
         Args: Record<PropertyKey, never>
         Returns: Json
@@ -2004,6 +2021,10 @@ export type Database = {
       text_soundex: {
         Args: { "": string }
         Returns: string
+      }
+      update_system_setting: {
+        Args: { p_key: string; p_value: Json; p_description?: string }
+        Returns: Json
       }
       validate_mcp_access: {
         Args: {

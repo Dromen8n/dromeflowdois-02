@@ -52,7 +52,7 @@ export function UserSection({ users, onUsersChange }: UserSectionProps) {
     try {
       const { data, error } = await supabase.rpc('super_admin_create_user', {
         p_email: newUser.email,
-        p_nome: newUser.nome,
+        p_name: newUser.nome,
         p_role: newUser.role,
         p_password: newUser.password
       });

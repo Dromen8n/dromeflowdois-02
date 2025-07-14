@@ -58,9 +58,9 @@ export function SettingsSection() {
   const loadModules = async () => {
     try {
       const { data, error } = await supabase
-        .from('modules')
+        .from('modulos_sistema')
         .select('*')
-        .order('category', { ascending: true });
+        .order('nome', { ascending: true });
       
       if (error) throw error;
       setModules(data || []);
@@ -127,8 +127,9 @@ export function SettingsSection() {
   };
 
   const modulesByCategory = modules.reduce((acc, module) => {
-    if (!acc[module.category]) acc[module.category] = [];
-    acc[module.category].push(module);
+    const category = module.nivel_acesso || 'outros';
+    if (!acc[category]) acc[category] = [];
+    acc[category].push(module);
     return acc;
   }, {} as Record<string, any[]>);
 
@@ -308,14 +309,14 @@ export function SettingsSection() {
                     {modulesArray.map((module: any) => (
                       <div key={module.id} className="border rounded-lg p-4">
                         <div className="flex items-center justify-between mb-2">
-                          <h5 className="font-medium">{module.name}</h5>
-                          <Badge variant={module.status === 'active' ? 'default' : 'secondary'}>
-                            {module.status}
+                          <h5 className="font-medium">{module.nome}</h5>
+                          <Badge variant={module.ativo ? 'default' : 'secondary'}>
+                            {module.ativo ? 'Ativo' : 'Inativo'}
                           </Badge>
                         </div>
-                        <p className="text-sm text-muted-foreground">{module.description}</p>
+                        <p className="text-sm text-muted-foreground">{module.descricao}</p>
                         <div className="mt-2 text-xs text-muted-foreground">
-                          v{module.version}
+                          {module.chave}
                         </div>
                       </div>
                     ))}
