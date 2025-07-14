@@ -187,8 +187,8 @@ export function ModulesSection() {
     setLoading(true);
     try {
       const { data, error } = await supabase.rpc('activate_module', {
-        p_module_key: moduleKey,
-        p_company_id: companyId
+        p_module_id: moduleKey,
+        p_active: true
       });
 
       if (error) throw error;

@@ -60,7 +60,10 @@ export function NotificationsSection() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setNotifications((data as SystemNotification[]) || []);
+      setNotifications(data?.map((item: any) => ({
+        ...item,
+        scheduled_at: item.created_at // Add missing field
+      })) || []);
     } catch (error) {
       console.error('Erro ao carregar notificações:', error);
       toast({

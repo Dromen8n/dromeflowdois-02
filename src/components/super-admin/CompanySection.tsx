@@ -55,8 +55,7 @@ export function CompanySection({ companies, onCompaniesChange }: CompanySectionP
       const { data, error } = await supabase.rpc('super_admin_create_company', {
         p_name: newCompany.name,
         p_key: newCompany.key,
-        p_document: newCompany.document || null,
-        p_plan: newCompany.plan
+        p_document: newCompany.document || null
       });
 
       if (error) throw error;

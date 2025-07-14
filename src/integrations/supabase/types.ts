@@ -1589,6 +1589,45 @@ export type Database = {
           },
         ]
       }
+      system_notifications: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          is_active: boolean
+          message: string
+          priority: number
+          target_audience: Json
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          message: string
+          priority?: number
+          target_audience?: Json
+          title: string
+          type?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          message?: string
+          priority?: number
+          target_audience?: Json
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       unidades: {
         Row: {
           codigo: string
@@ -1860,6 +1899,10 @@ export type Database = {
       }
     }
     Functions: {
+      activate_module: {
+        Args: { p_module_id: string; p_active: boolean }
+        Returns: Json
+      }
       authenticate_user: {
         Args: { p_email: string; p_password: string }
         Returns: Json
@@ -1877,11 +1920,17 @@ export type Database = {
         Returns: string
       }
       get_audit_logs: {
-        Args: { p_limit?: number; p_offset?: number }
+        Args:
+          | { p_limit?: number; p_offset?: number }
+          | { p_limit?: number; p_offset?: number; p_entity_type?: string }
         Returns: Json
       }
       get_franchise_details: {
         Args: { p_user_id: string }
+        Returns: Json
+      }
+      get_franchise_plans: {
+        Args: Record<PropertyKey, never>
         Returns: Json
       }
       get_user_companies: {
@@ -1935,6 +1984,10 @@ export type Database = {
       soundex: {
         Args: { "": string }
         Returns: string
+      }
+      super_admin_create_company: {
+        Args: { p_name: string; p_key: string; p_document: string }
+        Returns: Json
       }
       super_admin_get_companies: {
         Args: Record<PropertyKey, never>

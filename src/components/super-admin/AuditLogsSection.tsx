@@ -65,12 +65,16 @@ export function AuditLogsSection() {
     setLoading(true);
     try {
       const offset = (currentPage - 1) * pageSize;
-      const { data, error } = await supabase.rpc('get_audit_logs', {
+      const params: any = {
         p_limit: pageSize,
-        p_offset: offset,
-        p_entity_type: filters.entity_type || null,
-        p_company_id: filters.company_id || null
-      });
+        p_offset: offset
+      };
+      
+      if (filters.entity_type) {
+        params.p_entity_type = filters.entity_type;
+      }
+      
+      const { data, error } = await supabase.rpc('get_audit_logs', params);
 
       if (error) throw error;
 

@@ -80,12 +80,20 @@ export function PlansSection() {
 
     setLoading(true);
     try {
-      const { error } = await supabase
-        .from('franchise_plans')
-        .insert([{
-          ...newPlan,
-          features: JSON.stringify(newPlan.features)
-        }]);
+    const { error } = await supabase
+      .from('planos_sistema')
+      .insert([{
+        nome: newPlan.name,
+        tipo: 'profissional' as const,
+        preco: newPlan.price,
+        max_unidades: newPlan.max_units,
+        max_usuarios: newPlan.max_users,
+        modulos_incluidos: newPlan.features,
+        recursos: { 
+          description: newPlan.description,
+          limitations: newPlan.limitations 
+        }
+      }]);
 
       if (error) throw error;
 
@@ -120,10 +128,10 @@ export function PlansSection() {
 
   const togglePlanStatus = async (planId: string, currentStatus: boolean) => {
     try {
-      const { error } = await supabase
-        .from('franchise_plans')
-        .update({ is_active: !currentStatus })
-        .eq('id', planId);
+    const { error } = await supabase
+      .from('planos_sistema')
+      .update({ ativo: !currentStatus })
+      .eq('id', planId);
 
       if (error) throw error;
 
