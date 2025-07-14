@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/sidebar";
 import { menuItems } from "./sidebar/MenuItems";
 import { SidebarMenuItemComponent } from "./sidebar/SidebarMenuItem";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/components/AuthProvider";
 
 interface AppSidebarMenuProps {
   activeModule: string;

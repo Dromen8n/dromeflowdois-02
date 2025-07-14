@@ -64,12 +64,24 @@ export function ModulesSection() {
   const loadModules = async () => {
     try {
       const { data, error } = await supabase
-        .from('modules')
+        .from('modulos_sistema')
         .select('*')
-        .order('category', { ascending: true });
+        .order('chave', { ascending: true });
       
       if (error) throw error;
-      setModules((data || []) as Module[]);
+      setModules((data || []).map(item => ({
+        id: item.id,
+        key: item.chave,
+        name: item.nome,
+        description: item.descricao || '',
+        version: '1.0.0',
+        category: 'general',
+        icon: '',
+        status: item.ativo ? 'active' : 'inactive',
+        created_at: item.created_at,
+        config_schema: item.configuracoes,
+        dependencies: []
+      })) as Module[]);
     } catch (error) {
       console.error('Erro ao carregar módulos:', error);
       toast({
@@ -104,15 +116,14 @@ export function ModulesSection() {
     setLoading(true);
     try {
       const { error } = await supabase
-        .from('modules')
+        .from('modulos_sistema')
         .insert({
-          key: newModule.key,
-          name: newModule.name,
-          description: newModule.description,
-          category: newModule.category,
-          icon: newModule.icon,
-          version: newModule.version,
-          status: 'active'
+          chave: newModule.key,
+          nome: newModule.name,
+          descricao: newModule.description,
+          nivel_acesso: 'admin',
+          ativo: true,
+          configuracoes: {}
         });
 
       if (error) throw error;
@@ -148,8 +159,8 @@ export function ModulesSection() {
     setLoading(true);
     try {
       const { error } = await supabase
-        .from('modules')
-        .update({ status })
+        .from('modulos_sistema')
+        .update({ ativo: status === 'active' })
         .eq('id', moduleId);
 
       if (error) throw error;

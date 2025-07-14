@@ -45,48 +45,76 @@ export function LoginForm({ onLogin }: LoginFormProps) {
     setError("");
 
     try {
-      // Usar a função authenticate_user do banco para contornar RLS
-      const { data, error } = await supabase.rpc('authenticate_user', {
+      // Use Supabase Auth for authentication
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: credentials.email,
         password: credentials.password
       });
 
       if (error) {
         console.error('Erro na autenticação:', error);
-        setError("Erro interno do sistema");
+        setError(error.message || "Credenciais inválidas");
         return;
       }
 
-      const authResponse = data as unknown as AuthResponse;
-
-      if (!authResponse.success) {
-        setError(authResponse.message || "Erro na autenticação");
-        return;
-      }
-
-      if (!authResponse.user) {
+      if (!data.user) {
         setError("Dados do usuário não encontrados");
         return;
       }
+
+      // Get user profile data
+      const { data: userProfile, error: profileError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('auth_user_id', data.user.id)
+        .single();
+
+      if (profileError || !userProfile) {
+        // Create user profile if it doesn't exist
+        const { data: newProfile, error: createError } = await supabase
+          .from('users')
+          .insert({
+            auth_user_id: data.user.id,
+            email: data.user.email || '',
+            nome: data.user.user_metadata?.nome || data.user.email?.split('@')[0] || 'Usuário',
+            role: 'user'
+          })
+          .select()
+          .single();
+
+        if (createError) {
+          console.error('Erro ao criar perfil:', createError);
+          setError("Erro ao criar perfil do usuário");
+          return;
+        }
+      }
+
+      const profile = userProfile || {
+        id: data.user.id,
+        email: data.user.email || '',
+        nome: data.user.user_metadata?.nome || data.user.email?.split('@')[0] || 'Usuário',
+        role: 'user'
+      };
 
       // Buscar as empresas do usuário
       let companies: any[] = [];
       try {
         const { data: companiesData } = await supabase.rpc('get_user_companies', {
-          p_user_id: authResponse.user.id
+          p_user_id: profile.id
         });
-        companies = Array.isArray(companiesData) ? companiesData : [];
+        if (companiesData && typeof companiesData === 'object') {
+          companies = Array.isArray(companiesData) ? companiesData : [];
+        }
       } catch (companiesError) {
         console.error('Erro ao buscar empresas:', companiesError);
       }
 
       // Login bem-sucedido
       const userData = {
-        id: authResponse.user.id,
-        email: authResponse.user.email,
-        nome: authResponse.user.nome,
-        role: authResponse.user.role,
-        unidade_id: authResponse.user.unidade_id,
+        id: profile.id,
+        email: profile.email,
+        nome: profile.nome,
+        role: profile.role,
         companies: companies
       };
 

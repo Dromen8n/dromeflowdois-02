@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/components/AuthProvider";
 import {
   Building2,
   Users,
@@ -74,18 +74,9 @@ export function FranchiseModule() {
     try {
       setLoading(true);
       
-      // Primeiro, precisamos encontrar a empresa do usuário
-      const { data: memberData, error: memberError } = await supabase
-        .from('company_members')
-        .select('company_id')
-        .eq('user_id', user.id)
-        .single();
-
-      if (memberError) throw memberError;
-
-      // Agora buscar os dados completos da franquia
+      // Buscar dados da franquia do usuário
       const { data, error } = await supabase.rpc('get_franchise_details', {
-        p_company_id: memberData.company_id
+        p_user_id: user.id
       });
 
       if (error) throw error;

@@ -3,8 +3,8 @@ import { useState } from "react";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { ModernHeader } from "@/components/ModernHeader";
-import { LoginForm } from "@/components/LoginForm";
-import { useAuth } from "@/hooks/useAuth";
+import { Auth } from "@/pages/Auth";
+import { useAuth } from "@/components/AuthProvider";
 import PipelineKanban from "@/components/PipelineKanban";
 import ClientsModule from "@/components/ClientsModule";
 import ProfessionalsModule from "@/components/ProfessionalsModule";
@@ -18,12 +18,20 @@ import { SuperAdminModule } from "@/components/SuperAdminModule";
 import { FranchiseModule } from "@/components/FranchiseModule";
 
 const Index = () => {
-  const { user, login, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-modern"></div>
+      </div>
+    );
+  }
   const [activeModule, setActiveModule] = useState("gestao");
 
   // Se não estiver autenticado, mostrar tela de login
   if (!isAuthenticated) {
-    return <LoginForm onLogin={login} />;
+    return <Auth />;
   }
 
   const getPageTitle = () => {

@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Bell, Search, User, LogOut } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/components/AuthProvider";
 import { useToast } from "@/hooks/use-toast";
 
 interface ModernHeaderProps {

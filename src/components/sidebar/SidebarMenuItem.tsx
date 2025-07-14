@@ -9,7 +9,7 @@ import {
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
 import { MenuItem, isParentActive } from "./MenuItems";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/components/AuthProvider";
 
 interface SidebarMenuItemComponentProps {
   item: MenuItem;

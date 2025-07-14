@@ -72,6 +72,13 @@ export type Database = {
             foreignKeyName: "agendamentos_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agendamentos_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -117,6 +124,13 @@ export type Database = {
           metricas?: Json
         }
         Relationships: [
+          {
+            foreignKeyName: "analytics_franquia_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "analytics_franquia_franquia_id_fkey"
             columns: ["franquia_id"]
@@ -193,6 +207,13 @@ export type Database = {
             foreignKeyName: "atendimentos_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "atendimentos_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -250,6 +271,13 @@ export type Database = {
           valor?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "billing_global_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "billing_global_franquia_id_fkey"
             columns: ["franquia_id"]
@@ -326,6 +354,13 @@ export type Database = {
             foreignKeyName: "clientes_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "clientes_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -379,6 +414,13 @@ export type Database = {
           valor_unitario?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "compras_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "compras_franquia_id_fkey"
             columns: ["franquia_id"]
@@ -444,6 +486,13 @@ export type Database = {
             foreignKeyName: "comunicacao_interna_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comunicacao_interna_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -489,6 +538,13 @@ export type Database = {
             foreignKeyName: "configuracoes_franquia_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "configuracoes_franquia_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -530,6 +586,13 @@ export type Database = {
             foreignKeyName: "configuracoes_globais_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "configuracoes_globais_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -567,6 +630,13 @@ export type Database = {
           usuario_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "consultores_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "consultores_franquia_id_fkey"
             columns: ["franquia_id"]
@@ -624,6 +694,13 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "empresas_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "empresas_franquia_id_fkey"
             columns: ["franquia_id"]
@@ -688,6 +765,13 @@ export type Database = {
             foreignKeyName: "financeiro_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financeiro_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -704,6 +788,7 @@ export type Database = {
         Row: {
           cnpj: string
           codigo: string
+          company_id: string | null
           configuracoes: Json | null
           created_at: string | null
           id: string
@@ -718,6 +803,7 @@ export type Database = {
         Insert: {
           cnpj: string
           codigo: string
+          company_id?: string | null
           configuracoes?: Json | null
           created_at?: string | null
           id?: string
@@ -732,6 +818,7 @@ export type Database = {
         Update: {
           cnpj?: string
           codigo?: string
+          company_id?: string | null
           configuracoes?: Json | null
           created_at?: string | null
           id?: string
@@ -744,6 +831,20 @@ export type Database = {
           webhooks?: Json | null
         }
         Relationships: [
+          {
+            foreignKeyName: "franquias_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "franquias_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "franquias_plano_id_fkey"
             columns: ["plano_id"]
@@ -791,6 +892,13 @@ export type Database = {
           usuario_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "governanca_local_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "governanca_local_franquia_id_fkey"
             columns: ["franquia_id"]
@@ -903,6 +1011,13 @@ export type Database = {
             foreignKeyName: "maria_uni_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "maria_uni_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -964,6 +1079,13 @@ export type Database = {
             foreignKeyName: "marketing_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketing_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -1011,6 +1133,13 @@ export type Database = {
           nome?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "mcp_endpoints_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "mcp_endpoints_franquia_id_fkey"
             columns: ["franquia_id"]
@@ -1193,6 +1322,13 @@ export type Database = {
             foreignKeyName: "pipeline_captacao_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pipeline_captacao_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -1296,6 +1432,13 @@ export type Database = {
           whatsapp?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "profissionais_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "profissionais_franquia_id_fkey"
             columns: ["franquia_id"]
@@ -1420,6 +1563,13 @@ export type Database = {
             foreignKeyName: "suporte_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "suporte_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -1494,10 +1644,53 @@ export type Database = {
             foreignKeyName: "unidades_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "unidades_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
         ]
+      }
+      users: {
+        Row: {
+          active: boolean | null
+          auth_user_id: string | null
+          created_at: string | null
+          email: string
+          hashed_password: string | null
+          id: string
+          nome: string
+          role: string
+          updated_at: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          auth_user_id?: string | null
+          created_at?: string | null
+          email: string
+          hashed_password?: string | null
+          id?: string
+          nome: string
+          role?: string
+          updated_at?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          auth_user_id?: string | null
+          created_at?: string | null
+          email?: string
+          hashed_password?: string | null
+          id?: string
+          nome?: string
+          role?: string
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       usuarios_franquia: {
         Row: {
@@ -1548,6 +1741,13 @@ export type Database = {
             columns: ["empresa_id"]
             isOneToOne: false
             referencedRelation: "empresas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "usuarios_franquia_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
             referencedColumns: ["id"]
           },
           {
@@ -1607,6 +1807,13 @@ export type Database = {
             foreignKeyName: "usuarios_unidade_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "usuarios_unidade_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -1621,9 +1828,42 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      companies: {
+        Row: {
+          created_at: string | null
+          document: string | null
+          id: string | null
+          key: string | null
+          name: string | null
+          status: Database["public"]["Enums"]["sistema_status"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          document?: string | null
+          id?: string | null
+          key?: string | null
+          name?: string | null
+          status?: Database["public"]["Enums"]["sistema_status"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          document?: string | null
+          id?: string | null
+          key?: string | null
+          name?: string | null
+          status?: Database["public"]["Enums"]["sistema_status"] | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      authenticate_user: {
+        Args: { p_email: string; p_password: string }
+        Returns: Json
+      }
       daitch_mokotoff: {
         Args: { "": string }
         Returns: string[]
@@ -1635,6 +1875,18 @@ export type Database = {
       dmetaphone_alt: {
         Args: { "": string }
         Returns: string
+      }
+      get_audit_logs: {
+        Args: { p_limit?: number; p_offset?: number }
+        Returns: Json
+      }
+      get_franchise_details: {
+        Args: { p_user_id: string }
+        Returns: Json
+      }
+      get_user_companies: {
+        Args: { p_user_id: string }
+        Returns: Json
       }
       gtrgm_compress: {
         Args: { "": unknown }
@@ -1656,6 +1908,18 @@ export type Database = {
         Args: { "": unknown }
         Returns: unknown
       }
+      log_audit: {
+        Args: {
+          p_action: string
+          p_entity: string
+          p_entity_id: string
+          p_data_before?: Json
+          p_data_after?: Json
+          p_company_id?: string
+          p_unit_id?: string
+        }
+        Returns: undefined
+      }
       set_limit: {
         Args: { "": number }
         Returns: number
@@ -1671,6 +1935,18 @@ export type Database = {
       soundex: {
         Args: { "": string }
         Returns: string
+      }
+      super_admin_get_companies: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
+      super_admin_get_units: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
+      super_admin_get_users: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
       }
       text_soundex: {
         Args: { "": string }
