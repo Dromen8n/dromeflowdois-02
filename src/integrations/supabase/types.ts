@@ -7,254 +7,482 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instanciate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "12.2.3 (519615d)"
+  }
   public: {
     Tables: {
-      audit_logs: {
+      agendamentos: {
         Row: {
-          action: string
-          company_id: string | null
+          cliente_id: string | null
           created_at: string | null
-          entity_id: string | null
-          entity_type: string
+          data_agendamento: string
+          endereco: Json | null
+          franquia_id: string | null
           id: string
-          ip_address: unknown | null
-          new_data: Json | null
-          old_data: Json | null
-          unit_id: string | null
-          user_agent: string | null
-          user_id: string | null
-        }
-        Insert: {
-          action: string
-          company_id?: string | null
-          created_at?: string | null
-          entity_id?: string | null
-          entity_type: string
-          id?: string
-          ip_address?: unknown | null
-          new_data?: Json | null
-          old_data?: Json | null
-          unit_id?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          action?: string
-          company_id?: string | null
-          created_at?: string | null
-          entity_id?: string | null
-          entity_type?: string
-          id?: string
-          ip_address?: unknown | null
-          new_data?: Json | null
-          old_data?: Json | null
-          unit_id?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "audit_logs_company_id_fkey"
-            columns: ["company_id"]
-            isOneToOne: false
-            referencedRelation: "companies"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "audit_logs_unit_id_fkey"
-            columns: ["unit_id"]
-            isOneToOne: false
-            referencedRelation: "units"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "audit_logs_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      coluna_kanban: {
-        Row: {
-          company_key: string | null
-          created_at: string | null
-          id: string
-          nome_coluna: string
-          ordem: number | null
-        }
-        Insert: {
-          company_key?: string | null
-          created_at?: string | null
-          id?: string
-          nome_coluna: string
-          ordem?: number | null
-        }
-        Update: {
-          company_key?: string | null
-          created_at?: string | null
-          id?: string
-          nome_coluna?: string
-          ordem?: number | null
-        }
-        Relationships: []
-      }
-      companies: {
-        Row: {
-          active: boolean | null
-          address: Json | null
-          billing_data: Json | null
-          business_hours: Json | null
-          contact: Json | null
-          created_at: string
-          document: string | null
-          franchise_type: string | null
-          has_units: boolean | null
-          id: string
-          integration_settings: Json | null
-          key: string
-          logo_url: string | null
-          max_units: number | null
-          modules: Json | null
-          name: string
-          parent_company_id: string | null
-          plan: string | null
-          settings: Json | null
+          observacoes: string | null
+          profissional_id: string | null
+          servico: string
           status: string | null
-          subscription_expires_at: string | null
-          trial_ends_at: string | null
+          unidade_id: string | null
           updated_at: string | null
+          valor_estimado: number | null
         }
         Insert: {
-          active?: boolean | null
-          address?: Json | null
-          billing_data?: Json | null
-          business_hours?: Json | null
-          contact?: Json | null
-          created_at?: string
-          document?: string | null
-          franchise_type?: string | null
-          has_units?: boolean | null
+          cliente_id?: string | null
+          created_at?: string | null
+          data_agendamento: string
+          endereco?: Json | null
+          franquia_id?: string | null
           id?: string
-          integration_settings?: Json | null
-          key: string
-          logo_url?: string | null
-          max_units?: number | null
-          modules?: Json | null
-          name: string
-          parent_company_id?: string | null
-          plan?: string | null
-          settings?: Json | null
+          observacoes?: string | null
+          profissional_id?: string | null
+          servico: string
           status?: string | null
-          subscription_expires_at?: string | null
-          trial_ends_at?: string | null
+          unidade_id?: string | null
           updated_at?: string | null
+          valor_estimado?: number | null
         }
         Update: {
-          active?: boolean | null
-          address?: Json | null
-          billing_data?: Json | null
-          business_hours?: Json | null
-          contact?: Json | null
-          created_at?: string
-          document?: string | null
-          franchise_type?: string | null
-          has_units?: boolean | null
+          cliente_id?: string | null
+          created_at?: string | null
+          data_agendamento?: string
+          endereco?: Json | null
+          franquia_id?: string | null
           id?: string
-          integration_settings?: Json | null
-          key?: string
-          logo_url?: string | null
-          max_units?: number | null
-          modules?: Json | null
-          name?: string
-          parent_company_id?: string | null
-          plan?: string | null
-          settings?: Json | null
+          observacoes?: string | null
+          profissional_id?: string | null
+          servico?: string
           status?: string | null
-          subscription_expires_at?: string | null
-          trial_ends_at?: string | null
+          unidade_id?: string | null
           updated_at?: string | null
+          valor_estimado?: number | null
         }
         Relationships: [
           {
-            foreignKeyName: "companies_parent_company_id_fkey"
-            columns: ["parent_company_id"]
+            foreignKeyName: "agendamentos_cliente_id_fkey"
+            columns: ["cliente_id"]
             isOneToOne: false
-            referencedRelation: "companies"
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agendamentos_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agendamentos_profissional_id_fkey"
+            columns: ["profissional_id"]
+            isOneToOne: false
+            referencedRelation: "profissionais"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agendamentos_unidade_id_fkey"
+            columns: ["unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
             referencedColumns: ["id"]
           },
         ]
       }
-      company_members: {
+      analytics_franquia: {
         Row: {
-          company_id: string
+          consolidacao: Json | null
           created_at: string | null
+          data_referencia: string
+          franquia_id: string | null
           id: string
-          permissions: Json | null
-          role: string
-          updated_at: string | null
-          user_id: string
+          metricas: Json
         }
         Insert: {
-          company_id: string
+          consolidacao?: Json | null
           created_at?: string | null
+          data_referencia: string
+          franquia_id?: string | null
           id?: string
-          permissions?: Json | null
-          role: string
-          updated_at?: string | null
-          user_id: string
+          metricas: Json
         }
         Update: {
-          company_id?: string
+          consolidacao?: Json | null
           created_at?: string | null
+          data_referencia?: string
+          franquia_id?: string | null
           id?: string
-          permissions?: Json | null
-          role?: string
-          updated_at?: string | null
-          user_id?: string
+          metricas?: Json
         }
         Relationships: [
           {
-            foreignKeyName: "company_members_company_id_fkey"
-            columns: ["company_id"]
+            foreignKeyName: "analytics_franquia_franquia_id_fkey"
+            columns: ["franquia_id"]
             isOneToOne: false
-            referencedRelation: "companies"
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      atendimentos: {
+        Row: {
+          avaliacao: number | null
+          cliente_id: string | null
+          created_at: string | null
+          data_atendimento: string
+          endereco: Json | null
+          franquia_id: string | null
+          id: string
+          observacoes: string | null
+          profissional_id: string | null
+          repasse: number | null
+          servico: string
+          status: string | null
+          tipo: string | null
+          unidade_id: string | null
+          updated_at: string | null
+          valor: number | null
+        }
+        Insert: {
+          avaliacao?: number | null
+          cliente_id?: string | null
+          created_at?: string | null
+          data_atendimento: string
+          endereco?: Json | null
+          franquia_id?: string | null
+          id?: string
+          observacoes?: string | null
+          profissional_id?: string | null
+          repasse?: number | null
+          servico: string
+          status?: string | null
+          tipo?: string | null
+          unidade_id?: string | null
+          updated_at?: string | null
+          valor?: number | null
+        }
+        Update: {
+          avaliacao?: number | null
+          cliente_id?: string | null
+          created_at?: string | null
+          data_atendimento?: string
+          endereco?: Json | null
+          franquia_id?: string | null
+          id?: string
+          observacoes?: string | null
+          profissional_id?: string | null
+          repasse?: number | null
+          servico?: string
+          status?: string | null
+          tipo?: string | null
+          unidade_id?: string | null
+          updated_at?: string | null
+          valor?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "atendimentos_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "company_members_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "atendimentos_franquia_id_fkey"
+            columns: ["franquia_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "atendimentos_profissional_id_fkey"
+            columns: ["profissional_id"]
+            isOneToOne: false
+            referencedRelation: "profissionais"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "atendimentos_unidade_id_fkey"
+            columns: ["unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      billing_global: {
+        Row: {
+          created_at: string | null
+          data_pagamento: string | null
+          data_vencimento: string
+          franquia_id: string | null
+          id: string
+          metodo_pagamento: string | null
+          observacoes: string | null
+          plano_id: string | null
+          status: string | null
+          valor: number
+        }
+        Insert: {
+          created_at?: string | null
+          data_pagamento?: string | null
+          data_vencimento: string
+          franquia_id?: string | null
+          id?: string
+          metodo_pagamento?: string | null
+          observacoes?: string | null
+          plano_id?: string | null
+          status?: string | null
+          valor: number
+        }
+        Update: {
+          created_at?: string | null
+          data_pagamento?: string | null
+          data_vencimento?: string
+          franquia_id?: string | null
+          id?: string
+          metodo_pagamento?: string | null
+          observacoes?: string | null
+          plano_id?: string | null
+          status?: string | null
+          valor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "billing_global_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "billing_global_plano_id_fkey"
+            columns: ["plano_id"]
+            isOneToOne: false
+            referencedRelation: "planos_sistema"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clientes: {
+        Row: {
+          ativo: boolean | null
+          cpf: string | null
+          created_at: string | null
+          email: string | null
+          endereco: Json | null
+          franquia_id: string | null
+          historico: Json | null
+          id: string
+          nome: string
+          preferencias: Json | null
+          segmentacao: string | null
+          tags: string[] | null
+          telefone: string | null
+          unidade_id: string | null
+          updated_at: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          cpf?: string | null
+          created_at?: string | null
+          email?: string | null
+          endereco?: Json | null
+          franquia_id?: string | null
+          historico?: Json | null
+          id?: string
+          nome: string
+          preferencias?: Json | null
+          segmentacao?: string | null
+          tags?: string[] | null
+          telefone?: string | null
+          unidade_id?: string | null
+          updated_at?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          cpf?: string | null
+          created_at?: string | null
+          email?: string | null
+          endereco?: Json | null
+          franquia_id?: string | null
+          historico?: Json | null
+          id?: string
+          nome?: string
+          preferencias?: Json | null
+          segmentacao?: string | null
+          tags?: string[] | null
+          telefone?: string | null
+          unidade_id?: string | null
+          updated_at?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clientes_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "clientes_unidade_id_fkey"
+            columns: ["unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      compras: {
+        Row: {
+          created_at: string | null
+          fornecedor: string | null
+          franquia_id: string | null
+          id: string
+          item: string
+          quantidade: number
+          status: string | null
+          tipo: string
+          unidade_id: string | null
+          valor_total: number | null
+          valor_unitario: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          fornecedor?: string | null
+          franquia_id?: string | null
+          id?: string
+          item: string
+          quantidade: number
+          status?: string | null
+          tipo: string
+          unidade_id?: string | null
+          valor_total?: number | null
+          valor_unitario?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          fornecedor?: string | null
+          franquia_id?: string | null
+          id?: string
+          item?: string
+          quantidade?: number
+          status?: string | null
+          tipo?: string
+          unidade_id?: string | null
+          valor_total?: number | null
+          valor_unitario?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "compras_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "compras_unidade_id_fkey"
+            columns: ["unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      comunicacao_interna: {
+        Row: {
+          anexos: Json | null
+          assunto: string | null
+          created_at: string | null
+          destinatario_id: string | null
+          franquia_id: string | null
+          id: string
+          lida: boolean | null
+          mensagem: string
+          remetente_id: string | null
+          tipo: string
+        }
+        Insert: {
+          anexos?: Json | null
+          assunto?: string | null
+          created_at?: string | null
+          destinatario_id?: string | null
+          franquia_id?: string | null
+          id?: string
+          lida?: boolean | null
+          mensagem: string
+          remetente_id?: string | null
+          tipo: string
+        }
+        Update: {
+          anexos?: Json | null
+          assunto?: string | null
+          created_at?: string | null
+          destinatario_id?: string | null
+          franquia_id?: string | null
+          id?: string
+          lida?: boolean | null
+          mensagem?: string
+          remetente_id?: string | null
+          tipo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comunicacao_interna_destinatario_id_fkey"
+            columns: ["destinatario_id"]
+            isOneToOne: false
+            referencedRelation: "usuarios_franquia"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comunicacao_interna_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comunicacao_interna_remetente_id_fkey"
+            columns: ["remetente_id"]
+            isOneToOne: false
+            referencedRelation: "usuarios_franquia"
             referencedColumns: ["id"]
           },
         ]
       }
       configuracoes_franquia: {
         Row: {
+          categoria: string | null
           chave: string
+          created_at: string | null
           franquia_id: string | null
           id: string
-          tipo: string | null
           updated_at: string | null
-          valor: Json | null
+          valor: Json
         }
         Insert: {
+          categoria?: string | null
           chave: string
+          created_at?: string | null
           franquia_id?: string | null
           id?: string
-          tipo?: string | null
           updated_at?: string | null
-          valor?: Json | null
+          valor: Json
         }
         Update: {
+          categoria?: string | null
           chave?: string
+          created_at?: string | null
           franquia_id?: string | null
           id?: string
-          tipo?: string | null
           updated_at?: string | null
-          valor?: Json | null
+          valor?: Json
         }
         Relationships: [
           {
@@ -266,216 +494,208 @@ export type Database = {
           },
         ]
       }
-      custom_roles: {
+      configuracoes_globais: {
         Row: {
-          company_id: string | null
+          categoria: string | null
+          chave: string
           created_at: string | null
-          description: string | null
+          franquia_id: string | null
           id: string
-          is_system_role: boolean | null
-          name: string
-          permissions: Json
-          unit_id: string | null
+          sensitivo: boolean | null
           updated_at: string | null
+          valor: Json
         }
         Insert: {
-          company_id?: string | null
+          categoria?: string | null
+          chave: string
           created_at?: string | null
-          description?: string | null
+          franquia_id?: string | null
           id?: string
-          is_system_role?: boolean | null
-          name: string
-          permissions?: Json
-          unit_id?: string | null
+          sensitivo?: boolean | null
           updated_at?: string | null
+          valor: Json
         }
         Update: {
-          company_id?: string | null
+          categoria?: string | null
+          chave?: string
           created_at?: string | null
-          description?: string | null
+          franquia_id?: string | null
           id?: string
-          is_system_role?: boolean | null
-          name?: string
-          permissions?: Json
-          unit_id?: string | null
+          sensitivo?: boolean | null
           updated_at?: string | null
+          valor?: Json
         }
         Relationships: [
           {
-            foreignKeyName: "custom_roles_company_id_fkey"
-            columns: ["company_id"]
+            foreignKeyName: "configuracoes_globais_franquia_id_fkey"
+            columns: ["franquia_id"]
             isOneToOne: false
-            referencedRelation: "companies"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "custom_roles_unit_id_fkey"
-            columns: ["unit_id"]
-            isOneToOne: false
-            referencedRelation: "units"
+            referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
         ]
       }
-      documents: {
+      consultores: {
         Row: {
-          company_id: string | null
-          content: string | null
           created_at: string | null
-          created_by: string | null
-          document_type: string | null
-          file_ids: string[] | null
+          franquia_id: string | null
+          franquias_atribuidas: string[] | null
           id: string
-          status: string | null
-          title: string
-          unit_id: string | null
-          updated_at: string | null
+          performance_metrics: Json | null
+          setores_especializacao: string[]
+          territorios_atribuidos: Json | null
+          usuario_id: string | null
         }
         Insert: {
-          company_id?: string | null
-          content?: string | null
           created_at?: string | null
-          created_by?: string | null
-          document_type?: string | null
-          file_ids?: string[] | null
+          franquia_id?: string | null
+          franquias_atribuidas?: string[] | null
           id?: string
-          status?: string | null
-          title: string
-          unit_id?: string | null
-          updated_at?: string | null
+          performance_metrics?: Json | null
+          setores_especializacao: string[]
+          territorios_atribuidos?: Json | null
+          usuario_id?: string | null
         }
         Update: {
-          company_id?: string | null
-          content?: string | null
           created_at?: string | null
-          created_by?: string | null
-          document_type?: string | null
-          file_ids?: string[] | null
+          franquia_id?: string | null
+          franquias_atribuidas?: string[] | null
           id?: string
-          status?: string | null
-          title?: string
-          unit_id?: string | null
-          updated_at?: string | null
+          performance_metrics?: Json | null
+          setores_especializacao?: string[]
+          territorios_atribuidos?: Json | null
+          usuario_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "documents_company_id_fkey"
-            columns: ["company_id"]
+            foreignKeyName: "consultores_franquia_id_fkey"
+            columns: ["franquia_id"]
             isOneToOne: false
-            referencedRelation: "companies"
+            referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "documents_created_by_fkey"
-            columns: ["created_by"]
+            foreignKeyName: "consultores_usuario_id_fkey"
+            columns: ["usuario_id"]
             isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "documents_unit_id_fkey"
-            columns: ["unit_id"]
-            isOneToOne: false
-            referencedRelation: "units"
+            referencedRelation: "usuarios_franquia"
             referencedColumns: ["id"]
           },
         ]
       }
-      franchise_plans: {
+      empresas: {
         Row: {
-          billing_cycle: string | null
+          cnpj: string | null
+          codigo: string
+          configuracoes: Json | null
+          contato: Json | null
           created_at: string | null
-          description: string | null
-          features: Json | null
+          endereco: Json | null
+          franquia_id: string | null
           id: string
-          is_active: boolean | null
-          limitations: Json | null
-          max_units: number | null
-          max_users: number | null
-          name: string
-          price: number | null
+          nome: string
+          status: Database["public"]["Enums"]["sistema_status"] | null
           updated_at: string | null
         }
         Insert: {
-          billing_cycle?: string | null
+          cnpj?: string | null
+          codigo: string
+          configuracoes?: Json | null
+          contato?: Json | null
           created_at?: string | null
-          description?: string | null
-          features?: Json | null
+          endereco?: Json | null
+          franquia_id?: string | null
           id?: string
-          is_active?: boolean | null
-          limitations?: Json | null
-          max_units?: number | null
-          max_users?: number | null
-          name: string
-          price?: number | null
+          nome: string
+          status?: Database["public"]["Enums"]["sistema_status"] | null
           updated_at?: string | null
         }
         Update: {
-          billing_cycle?: string | null
+          cnpj?: string | null
+          codigo?: string
+          configuracoes?: Json | null
+          contato?: Json | null
           created_at?: string | null
-          description?: string | null
-          features?: Json | null
+          endereco?: Json | null
+          franquia_id?: string | null
           id?: string
-          is_active?: boolean | null
-          limitations?: Json | null
-          max_units?: number | null
-          max_users?: number | null
-          name?: string
-          price?: number | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      franchise_subscriptions: {
-        Row: {
-          auto_renew: boolean | null
-          company_id: string
-          created_at: string | null
-          expires_at: string | null
-          id: string
-          payment_data: Json | null
-          plan_id: string
-          starts_at: string | null
-          status: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          auto_renew?: boolean | null
-          company_id: string
-          created_at?: string | null
-          expires_at?: string | null
-          id?: string
-          payment_data?: Json | null
-          plan_id: string
-          starts_at?: string | null
-          status?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          auto_renew?: boolean | null
-          company_id?: string
-          created_at?: string | null
-          expires_at?: string | null
-          id?: string
-          payment_data?: Json | null
-          plan_id?: string
-          starts_at?: string | null
-          status?: string | null
+          nome?: string
+          status?: Database["public"]["Enums"]["sistema_status"] | null
           updated_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "franchise_subscriptions_company_id_fkey"
-            columns: ["company_id"]
+            foreignKeyName: "empresas_franquia_id_fkey"
+            columns: ["franquia_id"]
             isOneToOne: false
-            referencedRelation: "companies"
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      financeiro: {
+        Row: {
+          atendimento_id: string | null
+          categoria: string | null
+          created_at: string | null
+          data_pagamento: string | null
+          data_vencimento: string | null
+          descricao: string | null
+          franquia_id: string | null
+          id: string
+          status: string | null
+          tipo: string
+          unidade_id: string | null
+          valor: number
+        }
+        Insert: {
+          atendimento_id?: string | null
+          categoria?: string | null
+          created_at?: string | null
+          data_pagamento?: string | null
+          data_vencimento?: string | null
+          descricao?: string | null
+          franquia_id?: string | null
+          id?: string
+          status?: string | null
+          tipo: string
+          unidade_id?: string | null
+          valor: number
+        }
+        Update: {
+          atendimento_id?: string | null
+          categoria?: string | null
+          created_at?: string | null
+          data_pagamento?: string | null
+          data_vencimento?: string | null
+          descricao?: string | null
+          franquia_id?: string | null
+          id?: string
+          status?: string | null
+          tipo?: string
+          unidade_id?: string | null
+          valor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financeiro_atendimento_id_fkey"
+            columns: ["atendimento_id"]
+            isOneToOne: false
+            referencedRelation: "atendimentos"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "franchise_subscriptions_plan_id_fkey"
-            columns: ["plan_id"]
+            foreignKeyName: "financeiro_franquia_id_fkey"
+            columns: ["franquia_id"]
             isOneToOne: false
-            referencedRelation: "franchise_plans"
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financeiro_unidade_id_fkey"
+            columns: ["unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
             referencedColumns: ["id"]
           },
         ]
@@ -483,757 +703,642 @@ export type Database = {
       franquias: {
         Row: {
           cnpj: string
-          configuracao_visual: Json | null
+          codigo: string
+          configuracoes: Json | null
           created_at: string | null
-          created_by: string | null
-          data_cadastro: string | null
-          email: string
-          endereco: Json | null
           id: string
-          modulos_liberados: string[] | null
+          limites: Json | null
           nome: string
-          plano: string | null
-          status: string | null
-          telefone: string | null
+          plano_id: string | null
+          razao_social: string
+          status: Database["public"]["Enums"]["sistema_status"] | null
           updated_at: string | null
+          webhooks: Json | null
         }
         Insert: {
           cnpj: string
-          configuracao_visual?: Json | null
+          codigo: string
+          configuracoes?: Json | null
           created_at?: string | null
-          created_by?: string | null
-          data_cadastro?: string | null
-          email: string
-          endereco?: Json | null
           id?: string
-          modulos_liberados?: string[] | null
+          limites?: Json | null
           nome: string
-          plano?: string | null
-          status?: string | null
-          telefone?: string | null
+          plano_id?: string | null
+          razao_social: string
+          status?: Database["public"]["Enums"]["sistema_status"] | null
           updated_at?: string | null
+          webhooks?: Json | null
         }
         Update: {
           cnpj?: string
-          configuracao_visual?: Json | null
+          codigo?: string
+          configuracoes?: Json | null
           created_at?: string | null
-          created_by?: string | null
-          data_cadastro?: string | null
-          email?: string
-          endereco?: Json | null
           id?: string
-          modulos_liberados?: string[] | null
+          limites?: Json | null
           nome?: string
-          plano?: string | null
-          status?: string | null
-          telefone?: string | null
+          plano_id?: string | null
+          razao_social?: string
+          status?: Database["public"]["Enums"]["sistema_status"] | null
           updated_at?: string | null
+          webhooks?: Json | null
         }
         Relationships: [
           {
-            foreignKeyName: "franquias_created_by_fkey"
-            columns: ["created_by"]
+            foreignKeyName: "franquias_plano_id_fkey"
+            columns: ["plano_id"]
             isOneToOne: false
-            referencedRelation: "super_admins"
+            referencedRelation: "planos_sistema"
             referencedColumns: ["id"]
           },
         ]
       }
-      logs_auditoria: {
+      governanca_local: {
         Row: {
           acao: string
           created_at: string | null
-          dados_anteriores: Json | null
-          dados_novos: Json | null
+          dados: Json | null
+          entidade: string | null
+          entidade_id: string | null
+          franquia_id: string | null
           id: string
-          ip_address: string | null
-          registro_id: string | null
-          tabela_afetada: string | null
-          user_agent: string | null
+          ip_address: unknown | null
+          unidade_id: string | null
           usuario_id: string | null
         }
         Insert: {
           acao: string
           created_at?: string | null
-          dados_anteriores?: Json | null
-          dados_novos?: Json | null
+          dados?: Json | null
+          entidade?: string | null
+          entidade_id?: string | null
+          franquia_id?: string | null
           id?: string
-          ip_address?: string | null
-          registro_id?: string | null
-          tabela_afetada?: string | null
-          user_agent?: string | null
+          ip_address?: unknown | null
+          unidade_id?: string | null
           usuario_id?: string | null
         }
         Update: {
           acao?: string
           created_at?: string | null
-          dados_anteriores?: Json | null
-          dados_novos?: Json | null
-          id?: string
-          ip_address?: string | null
-          registro_id?: string | null
-          tabela_afetada?: string | null
-          user_agent?: string | null
-          usuario_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "logs_auditoria_usuario_id_fkey"
-            columns: ["usuario_id"]
-            isOneToOne: false
-            referencedRelation: "usuarios"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      metricas_usabilidade: {
-        Row: {
-          acoes_realizadas: number | null
-          created_at: string | null
-          data_acesso: string | null
-          franquia_id: string | null
-          id: string
-          modulo_acessado: string | null
-          tempo_sessao: number | null
-          unidade_id: string | null
-          usuario_id: string | null
-        }
-        Insert: {
-          acoes_realizadas?: number | null
-          created_at?: string | null
-          data_acesso?: string | null
+          dados?: Json | null
+          entidade?: string | null
+          entidade_id?: string | null
           franquia_id?: string | null
           id?: string
-          modulo_acessado?: string | null
-          tempo_sessao?: number | null
-          unidade_id?: string | null
-          usuario_id?: string | null
-        }
-        Update: {
-          acoes_realizadas?: number | null
-          created_at?: string | null
-          data_acesso?: string | null
-          franquia_id?: string | null
-          id?: string
-          modulo_acessado?: string | null
-          tempo_sessao?: number | null
+          ip_address?: unknown | null
           unidade_id?: string | null
           usuario_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "metricas_usabilidade_franquia_id_fkey"
+            foreignKeyName: "governanca_local_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "metricas_usabilidade_unidade_id_fkey"
+            foreignKeyName: "governanca_local_unidade_id_fkey"
             columns: ["unidade_id"]
             isOneToOne: false
             referencedRelation: "unidades"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "metricas_usabilidade_usuario_id_fkey"
+            foreignKeyName: "governanca_local_usuario_id_fkey"
             columns: ["usuario_id"]
             isOneToOne: false
-            referencedRelation: "usuarios"
+            referencedRelation: "usuarios_unidade"
             referencedColumns: ["id"]
           },
         ]
       }
-      module_instances: {
+      logs_sistema_global: {
         Row: {
-          company_id: string | null
-          config: Json | null
+          acao: string
           created_at: string | null
-          custom_settings: Json | null
+          dados_antes: Json | null
+          dados_depois: Json | null
+          entidade: string | null
+          entidade_id: string | null
           id: string
-          module_id: string
-          status: string | null
-          unit_id: string | null
-          updated_at: string | null
-          webhook_events: Json | null
-          webhook_headers: Json | null
-          webhook_url: string | null
+          ip_address: unknown | null
+          super_admin_id: string | null
+          user_agent: string | null
         }
         Insert: {
-          company_id?: string | null
-          config?: Json | null
+          acao: string
           created_at?: string | null
-          custom_settings?: Json | null
+          dados_antes?: Json | null
+          dados_depois?: Json | null
+          entidade?: string | null
+          entidade_id?: string | null
           id?: string
-          module_id: string
-          status?: string | null
-          unit_id?: string | null
-          updated_at?: string | null
-          webhook_events?: Json | null
-          webhook_headers?: Json | null
-          webhook_url?: string | null
+          ip_address?: unknown | null
+          super_admin_id?: string | null
+          user_agent?: string | null
         }
         Update: {
-          company_id?: string | null
-          config?: Json | null
+          acao?: string
           created_at?: string | null
-          custom_settings?: Json | null
+          dados_antes?: Json | null
+          dados_depois?: Json | null
+          entidade?: string | null
+          entidade_id?: string | null
           id?: string
-          module_id?: string
-          status?: string | null
-          unit_id?: string | null
-          updated_at?: string | null
-          webhook_events?: Json | null
-          webhook_headers?: Json | null
-          webhook_url?: string | null
+          ip_address?: unknown | null
+          super_admin_id?: string | null
+          user_agent?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "module_instances_company_id_fkey"
-            columns: ["company_id"]
+            foreignKeyName: "logs_sistema_global_super_admin_id_fkey"
+            columns: ["super_admin_id"]
             isOneToOne: false
-            referencedRelation: "companies"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "module_instances_unit_id_fkey"
-            columns: ["unit_id"]
-            isOneToOne: false
-            referencedRelation: "units"
+            referencedRelation: "super_admins"
             referencedColumns: ["id"]
           },
         ]
       }
-      modules: {
+      maria_uni: {
         Row: {
-          category: string | null
-          config_schema: Json | null
+          certificacoes: Json | null
           created_at: string | null
-          dependencies: string[] | null
-          description: string | null
-          icon: string | null
+          curso_id: string | null
+          franquia_id: string | null
           id: string
-          key: string
-          name: string
-          status: string | null
+          pontuacao: number | null
+          progresso: Json | null
+          unidade_id: string | null
           updated_at: string | null
-          version: string | null
+          usuario_id: string | null
         }
         Insert: {
-          category?: string | null
-          config_schema?: Json | null
+          certificacoes?: Json | null
           created_at?: string | null
-          dependencies?: string[] | null
-          description?: string | null
-          icon?: string | null
+          curso_id?: string | null
+          franquia_id?: string | null
           id?: string
-          key: string
-          name: string
-          status?: string | null
+          pontuacao?: number | null
+          progresso?: Json | null
+          unidade_id?: string | null
           updated_at?: string | null
-          version?: string | null
+          usuario_id?: string | null
         }
         Update: {
-          category?: string | null
-          config_schema?: Json | null
+          certificacoes?: Json | null
           created_at?: string | null
-          dependencies?: string[] | null
-          description?: string | null
-          icon?: string | null
+          curso_id?: string | null
+          franquia_id?: string | null
           id?: string
-          key?: string
-          name?: string
-          status?: string | null
+          pontuacao?: number | null
+          progresso?: Json | null
+          unidade_id?: string | null
           updated_at?: string | null
-          version?: string | null
+          usuario_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "maria_uni_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "maria_uni_unidade_id_fkey"
+            columns: ["unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "maria_uni_usuario_id_fkey"
+            columns: ["usuario_id"]
+            isOneToOne: false
+            referencedRelation: "usuarios_unidade"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      marketing: {
+        Row: {
+          ativo: boolean | null
+          configuracoes: Json | null
+          created_at: string | null
+          franquia_id: string | null
+          id: string
+          nome: string
+          resultados: Json | null
+          tipo: string
+          unidade_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          configuracoes?: Json | null
+          created_at?: string | null
+          franquia_id?: string | null
+          id?: string
+          nome: string
+          resultados?: Json | null
+          tipo: string
+          unidade_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          configuracoes?: Json | null
+          created_at?: string | null
+          franquia_id?: string | null
+          id?: string
+          nome?: string
+          resultados?: Json | null
+          tipo?: string
+          unidade_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketing_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "marketing_unidade_id_fkey"
+            columns: ["unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mcp_endpoints: {
+        Row: {
+          ativo: boolean | null
+          configuracao: Json | null
+          created_at: string | null
+          endpoint: string
+          franquia_id: string | null
+          id: string
+          metodo: string
+          nivel_acesso: Database["public"]["Enums"]["nivel_acesso"]
+          nome: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          configuracao?: Json | null
+          created_at?: string | null
+          endpoint: string
+          franquia_id?: string | null
+          id?: string
+          metodo: string
+          nivel_acesso: Database["public"]["Enums"]["nivel_acesso"]
+          nome: string
+        }
+        Update: {
+          ativo?: boolean | null
+          configuracao?: Json | null
+          created_at?: string | null
+          endpoint?: string
+          franquia_id?: string | null
+          id?: string
+          metodo?: string
+          nivel_acesso?: Database["public"]["Enums"]["nivel_acesso"]
+          nome?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mcp_endpoints_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mcp_logs: {
+        Row: {
+          created_at: string | null
+          endpoint_id: string | null
+          id: string
+          ip_address: unknown | null
+          metodo: string | null
+          payload: Json | null
+          response: Json | null
+          status_code: number | null
+          tempo_resposta: number | null
+          usuario_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          endpoint_id?: string | null
+          id?: string
+          ip_address?: unknown | null
+          metodo?: string | null
+          payload?: Json | null
+          response?: Json | null
+          status_code?: number | null
+          tempo_resposta?: number | null
+          usuario_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          endpoint_id?: string | null
+          id?: string
+          ip_address?: unknown | null
+          metodo?: string | null
+          payload?: Json | null
+          response?: Json | null
+          status_code?: number | null
+          tempo_resposta?: number | null
+          usuario_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mcp_logs_endpoint_id_fkey"
+            columns: ["endpoint_id"]
+            isOneToOne: false
+            referencedRelation: "mcp_endpoints"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       modulos_sistema: {
         Row: {
           ativo: boolean | null
-          categoria: string | null
+          chave: string
+          configuracoes: Json | null
           created_at: string | null
           descricao: string | null
-          icone: string | null
           id: string
+          nivel_acesso: Database["public"]["Enums"]["nivel_acesso"]
           nome: string
-          ordem: number | null
-          url_acesso: string | null
         }
         Insert: {
           ativo?: boolean | null
-          categoria?: string | null
+          chave: string
+          configuracoes?: Json | null
           created_at?: string | null
           descricao?: string | null
-          icone?: string | null
           id?: string
+          nivel_acesso: Database["public"]["Enums"]["nivel_acesso"]
           nome: string
-          ordem?: number | null
-          url_acesso?: string | null
         }
         Update: {
           ativo?: boolean | null
-          categoria?: string | null
+          chave?: string
+          configuracoes?: Json | null
           created_at?: string | null
           descricao?: string | null
-          icone?: string | null
           id?: string
+          nivel_acesso?: Database["public"]["Enums"]["nivel_acesso"]
           nome?: string
-          ordem?: number | null
-          url_acesso?: string | null
         }
         Relationships: []
       }
-      notification_reads: {
+      permissoes_globais: {
         Row: {
+          chave: string
+          created_at: string | null
+          descricao: string | null
           id: string
-          notification_id: string
-          read_at: string | null
-          user_id: string
+          modulo_id: string | null
+          nivel_acesso: Database["public"]["Enums"]["nivel_acesso"]
+          nome: string
         }
         Insert: {
+          chave: string
+          created_at?: string | null
+          descricao?: string | null
           id?: string
-          notification_id: string
-          read_at?: string | null
-          user_id: string
+          modulo_id?: string | null
+          nivel_acesso: Database["public"]["Enums"]["nivel_acesso"]
+          nome: string
         }
         Update: {
+          chave?: string
+          created_at?: string | null
+          descricao?: string | null
           id?: string
-          notification_id?: string
-          read_at?: string | null
-          user_id?: string
+          modulo_id?: string | null
+          nivel_acesso?: Database["public"]["Enums"]["nivel_acesso"]
+          nome?: string
         }
         Relationships: [
           {
-            foreignKeyName: "notification_reads_notification_id_fkey"
-            columns: ["notification_id"]
+            foreignKeyName: "permissoes_globais_modulo_id_fkey"
+            columns: ["modulo_id"]
             isOneToOne: false
-            referencedRelation: "system_notifications"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "notification_reads_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "modulos_sistema"
             referencedColumns: ["id"]
           },
         ]
       }
-      notifications: {
+      pipeline_captacao: {
         Row: {
-          action_url: string | null
+          avaliacao_financeira: Json | null
+          consultor_id: string | null
           created_at: string | null
-          data: Json | null
+          dados_pessoais: Json
+          documentos: Json | null
+          estagio_atual: string
+          franquia_id: string | null
+          historico_comunicacao: Json | null
           id: string
-          message: string
-          read: boolean | null
-          title: string
-          type: string | null
-          user_id: string | null
-        }
-        Insert: {
-          action_url?: string | null
-          created_at?: string | null
-          data?: Json | null
-          id?: string
-          message: string
-          read?: boolean | null
-          title: string
-          type?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          action_url?: string | null
-          created_at?: string | null
-          data?: Json | null
-          id?: string
-          message?: string
-          read?: boolean | null
-          title?: string
-          type?: string | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "notifications_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      platform_keys: {
-        Row: {
-          api_key: string
-          created_at: string
-          id: string
-          platform_name: string
-          status: boolean | null
-          unidade_id: string
-        }
-        Insert: {
-          api_key: string
-          created_at?: string
-          id?: string
-          platform_name: string
-          status?: boolean | null
-          unidade_id: string
-        }
-        Update: {
-          api_key?: string
-          created_at?: string
-          id?: string
-          platform_name?: string
-          status?: boolean | null
-          unidade_id?: string
-        }
-        Relationships: []
-      }
-      profiles: {
-        Row: {
-          avatar_url: string | null
-          created_at: string | null
-          full_name: string | null
-          id: string
-          phone: string | null
-          position: string | null
+          origem: string | null
+          timeline_processo: Json | null
           updated_at: string | null
-          user_id: string
         }
         Insert: {
-          avatar_url?: string | null
+          avaliacao_financeira?: Json | null
+          consultor_id?: string | null
           created_at?: string | null
-          full_name?: string | null
+          dados_pessoais: Json
+          documentos?: Json | null
+          estagio_atual: string
+          franquia_id?: string | null
+          historico_comunicacao?: Json | null
           id?: string
-          phone?: string | null
-          position?: string | null
+          origem?: string | null
+          timeline_processo?: Json | null
           updated_at?: string | null
-          user_id: string
         }
         Update: {
-          avatar_url?: string | null
+          avaliacao_financeira?: Json | null
+          consultor_id?: string | null
           created_at?: string | null
-          full_name?: string | null
+          dados_pessoais?: Json
+          documentos?: Json | null
+          estagio_atual?: string
+          franquia_id?: string | null
+          historico_comunicacao?: Json | null
           id?: string
-          phone?: string | null
-          position?: string | null
+          origem?: string | null
+          timeline_processo?: Json | null
           updated_at?: string | null
-          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "profiles_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: true
-            referencedRelation: "users"
+            foreignKeyName: "pipeline_captacao_consultor_id_fkey"
+            columns: ["consultor_id"]
+            isOneToOne: false
+            referencedRelation: "usuarios_franquia"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pipeline_captacao_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
         ]
+      }
+      planos_sistema: {
+        Row: {
+          ativo: boolean | null
+          created_at: string | null
+          id: string
+          max_unidades: number
+          max_usuarios: number
+          modulos_incluidos: Json
+          nome: string
+          preco: number
+          recursos: Json
+          tipo: Database["public"]["Enums"]["plano_tipo"]
+          updated_at: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string | null
+          id?: string
+          max_unidades?: number
+          max_usuarios?: number
+          modulos_incluidos?: Json
+          nome: string
+          preco: number
+          recursos?: Json
+          tipo: Database["public"]["Enums"]["plano_tipo"]
+          updated_at?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string | null
+          id?: string
+          max_unidades?: number
+          max_usuarios?: number
+          modulos_incluidos?: Json
+          nome?: string
+          preco?: number
+          recursos?: Json
+          tipo?: Database["public"]["Enums"]["plano_tipo"]
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       profissionais: {
         Row: {
-          company_key: string
-          created_at: string
-          id: string
-          NOME: string | null
-          unit_id: string | null
-          WHATSAPP: string | null
-        }
-        Insert: {
-          company_key: string
-          created_at?: string
-          id?: string
-          NOME?: string | null
-          unit_id?: string | null
-          WHATSAPP?: string | null
-        }
-        Update: {
-          company_key?: string
-          created_at?: string
-          id?: string
-          NOME?: string | null
-          unit_id?: string | null
-          WHATSAPP?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "profissionais_unit_id_fkey"
-            columns: ["unit_id"]
-            isOneToOne: false
-            referencedRelation: "units"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      recruitment_module: {
-        Row: {
-          candidates: Json | null
-          company_id: string | null
-          config: Json | null
-          created_at: string | null
-          description: string | null
-          id: string
-          position: string
-          requirements: string[] | null
-          status: string | null
-          unit_id: string | null
-        }
-        Insert: {
-          candidates?: Json | null
-          company_id?: string | null
-          config?: Json | null
-          created_at?: string | null
-          description?: string | null
-          id?: string
-          position: string
-          requirements?: string[] | null
-          status?: string | null
-          unit_id?: string | null
-        }
-        Update: {
-          candidates?: Json | null
-          company_id?: string | null
-          config?: Json | null
-          created_at?: string | null
-          description?: string | null
-          id?: string
-          position?: string
-          requirements?: string[] | null
-          status?: string | null
-          unit_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "recruitment_module_company_id_fkey"
-            columns: ["company_id"]
-            isOneToOne: false
-            referencedRelation: "companies"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "recruitment_module_unit_id_fkey"
-            columns: ["unit_id"]
-            isOneToOne: false
-            referencedRelation: "units"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      recrutamento: {
-        Row: {
-          company_key: string | null
+          avaliacao_media: number | null
+          certificacoes: Json | null
           cpf: string | null
-          created_at: string
-          data_nasc: string | null
-          dias_livres: string | null
-          dias_semana: string | null
-          endereço: string | null
-          estado_civil: string | null
-          exp_comercial: string | null
-          exp_residencial: string | null
-          filhos: string | null
-          fumante: string | null
-          id: number
-          motivo_cadastro: string | null
-          nome: string | null
-          qto_filhos: string | null
-          ref_comercial: string | null
-          ref_residencial: string | null
-          rest_pet: string | null
-          rest_pet_qual: string | null
-          rg: string | null
-          rotina_filhos: string | null
-          sit_atual: string | null
-          STATUS: string | null
-          transporte: string | null
-          unidade: string | null
+          created_at: string | null
+          disponibilidade: Json | null
+          documentos: Json | null
+          endereco: Json | null
+          especializacoes: string[] | null
+          franquia_id: string | null
+          id: string
+          nome: string
+          status: string | null
+          telefone: string | null
+          unidade_id: string | null
+          updated_at: string | null
           whatsapp: string | null
         }
         Insert: {
-          company_key?: string | null
+          avaliacao_media?: number | null
+          certificacoes?: Json | null
           cpf?: string | null
-          created_at?: string
-          data_nasc?: string | null
-          dias_livres?: string | null
-          dias_semana?: string | null
-          endereço?: string | null
-          estado_civil?: string | null
-          exp_comercial?: string | null
-          exp_residencial?: string | null
-          filhos?: string | null
-          fumante?: string | null
-          id?: number
-          motivo_cadastro?: string | null
-          nome?: string | null
-          qto_filhos?: string | null
-          ref_comercial?: string | null
-          ref_residencial?: string | null
-          rest_pet?: string | null
-          rest_pet_qual?: string | null
-          rg?: string | null
-          rotina_filhos?: string | null
-          sit_atual?: string | null
-          STATUS?: string | null
-          transporte?: string | null
-          unidade?: string | null
+          created_at?: string | null
+          disponibilidade?: Json | null
+          documentos?: Json | null
+          endereco?: Json | null
+          especializacoes?: string[] | null
+          franquia_id?: string | null
+          id?: string
+          nome: string
+          status?: string | null
+          telefone?: string | null
+          unidade_id?: string | null
+          updated_at?: string | null
           whatsapp?: string | null
         }
         Update: {
-          company_key?: string | null
+          avaliacao_media?: number | null
+          certificacoes?: Json | null
           cpf?: string | null
-          created_at?: string
-          data_nasc?: string | null
-          dias_livres?: string | null
-          dias_semana?: string | null
-          endereço?: string | null
-          estado_civil?: string | null
-          exp_comercial?: string | null
-          exp_residencial?: string | null
-          filhos?: string | null
-          fumante?: string | null
-          id?: number
-          motivo_cadastro?: string | null
-          nome?: string | null
-          qto_filhos?: string | null
-          ref_comercial?: string | null
-          ref_residencial?: string | null
-          rest_pet?: string | null
-          rest_pet_qual?: string | null
-          rg?: string | null
-          rotina_filhos?: string | null
-          sit_atual?: string | null
-          STATUS?: string | null
-          transporte?: string | null
-          unidade?: string | null
+          created_at?: string | null
+          disponibilidade?: Json | null
+          documentos?: Json | null
+          endereco?: Json | null
+          especializacoes?: string[] | null
+          franquia_id?: string | null
+          id?: string
+          nome?: string
+          status?: string | null
+          telefone?: string | null
+          unidade_id?: string | null
+          updated_at?: string | null
           whatsapp?: string | null
-        }
-        Relationships: []
-      }
-      status_atendimento: {
-        Row: {
-          CLIENTE: string | null
-          company_key: string
-          created_at: string
-          DATA: string | null
-          DIA: string | null
-          ENDEREÇO: string | null
-          HORARIO: string | null
-          id: string
-          MOMENTO: string | null
-          PERÍODO: string | null
-          PROFISSIONAL: string | null
-          SERVIÇO: string | null
-          STATUS: string | null
-          TIPO: string | null
-          unit_id: string | null
-          whatscliente: string | null
-        }
-        Insert: {
-          CLIENTE?: string | null
-          company_key: string
-          created_at?: string
-          DATA?: string | null
-          DIA?: string | null
-          ENDEREÇO?: string | null
-          HORARIO?: string | null
-          id?: string
-          MOMENTO?: string | null
-          PERÍODO?: string | null
-          PROFISSIONAL?: string | null
-          SERVIÇO?: string | null
-          STATUS?: string | null
-          TIPO?: string | null
-          unit_id?: string | null
-          whatscliente?: string | null
-        }
-        Update: {
-          CLIENTE?: string | null
-          company_key?: string
-          created_at?: string
-          DATA?: string | null
-          DIA?: string | null
-          ENDEREÇO?: string | null
-          HORARIO?: string | null
-          id?: string
-          MOMENTO?: string | null
-          PERÍODO?: string | null
-          PROFISSIONAL?: string | null
-          SERVIÇO?: string | null
-          STATUS?: string | null
-          TIPO?: string | null
-          unit_id?: string | null
-          whatscliente?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "status_atendimento_unit_id_fkey"
-            columns: ["unit_id"]
+            foreignKeyName: "profissionais_franquia_id_fkey"
+            columns: ["franquia_id"]
             isOneToOne: false
-            referencedRelation: "units"
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profissionais_unidade_id_fkey"
+            columns: ["unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
             referencedColumns: ["id"]
           },
         ]
       }
-      status_atendimento_historico: {
+      sistema_global: {
         Row: {
-          archived_at: string
-          CLIENTE: string | null
-          company_key: string | null
-          created_at_original: string | null
-          DATA: string | null
-          DIA: string | null
-          ENDEREÇO: string | null
-          HORARIO: string | null
+          configuracoes: Json
+          created_at: string | null
           id: string
-          id_original: string | null
-          MOMENTO: string | null
-          PERÍODO: string | null
-          PROFISSIONAL: string | null
-          SERVIÇO: string | null
-          STATUS_ORIGINAL: string | null
-          TIPO: string | null
-          whatscliente: string | null
+          manutencao: boolean | null
+          nome: string
+          updated_at: string | null
+          versao: string
         }
         Insert: {
-          archived_at?: string
-          CLIENTE?: string | null
-          company_key?: string | null
-          created_at_original?: string | null
-          DATA?: string | null
-          DIA?: string | null
-          ENDEREÇO?: string | null
-          HORARIO?: string | null
+          configuracoes?: Json
+          created_at?: string | null
           id?: string
-          id_original?: string | null
-          MOMENTO?: string | null
-          PERÍODO?: string | null
-          PROFISSIONAL?: string | null
-          SERVIÇO?: string | null
-          STATUS_ORIGINAL?: string | null
-          TIPO?: string | null
-          whatscliente?: string | null
+          manutencao?: boolean | null
+          nome?: string
+          updated_at?: string | null
+          versao: string
         }
         Update: {
-          archived_at?: string
-          CLIENTE?: string | null
-          company_key?: string | null
-          created_at_original?: string | null
-          DATA?: string | null
-          DIA?: string | null
-          ENDEREÇO?: string | null
-          HORARIO?: string | null
+          configuracoes?: Json
+          created_at?: string | null
           id?: string
-          id_original?: string | null
-          MOMENTO?: string | null
-          PERÍODO?: string | null
-          PROFISSIONAL?: string | null
-          SERVIÇO?: string | null
-          STATUS_ORIGINAL?: string | null
-          TIPO?: string | null
-          whatscliente?: string | null
+          manutencao?: boolean | null
+          nome?: string
+          updated_at?: string | null
+          versao?: string
         }
         Relationships: []
       }
@@ -1241,180 +1346,150 @@ export type Database = {
         Row: {
           ativo: boolean | null
           created_at: string | null
-          email: string
           id: string
-          nome: string
-          senha_hash: string
-          updated_at: string | null
+          nivel_acesso: number | null
+          permissoes: Json | null
+          ultimo_acesso: string | null
+          user_id: string | null
         }
         Insert: {
           ativo?: boolean | null
           created_at?: string | null
-          email: string
           id?: string
-          nome: string
-          senha_hash: string
-          updated_at?: string | null
+          nivel_acesso?: number | null
+          permissoes?: Json | null
+          ultimo_acesso?: string | null
+          user_id?: string | null
         }
         Update: {
           ativo?: boolean | null
           created_at?: string | null
-          email?: string
           id?: string
-          nome?: string
-          senha_hash?: string
-          updated_at?: string | null
+          nivel_acesso?: number | null
+          permissoes?: Json | null
+          ultimo_acesso?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
-      system_notifications: {
+      suporte: {
         Row: {
+          assunto: string
           created_at: string | null
-          created_by: string | null
-          expires_at: string | null
+          descricao: string | null
+          franquia_id: string | null
           id: string
-          is_active: boolean | null
-          message: string
-          priority: number | null
-          scheduled_at: string | null
-          target_audience: Json | null
-          title: string
-          type: string | null
+          prioridade: string | null
+          resposta: string | null
+          solicitante_id: string | null
+          status: string | null
+          tipo: string
+          unidade_id: string | null
+          updated_at: string | null
         }
         Insert: {
+          assunto: string
           created_at?: string | null
-          created_by?: string | null
-          expires_at?: string | null
+          descricao?: string | null
+          franquia_id?: string | null
           id?: string
-          is_active?: boolean | null
-          message: string
-          priority?: number | null
-          scheduled_at?: string | null
-          target_audience?: Json | null
-          title: string
-          type?: string | null
+          prioridade?: string | null
+          resposta?: string | null
+          solicitante_id?: string | null
+          status?: string | null
+          tipo: string
+          unidade_id?: string | null
+          updated_at?: string | null
         }
         Update: {
+          assunto?: string
           created_at?: string | null
-          created_by?: string | null
-          expires_at?: string | null
+          descricao?: string | null
+          franquia_id?: string | null
           id?: string
-          is_active?: boolean | null
-          message?: string
-          priority?: number | null
-          scheduled_at?: string | null
-          target_audience?: Json | null
-          title?: string
-          type?: string | null
+          prioridade?: string | null
+          resposta?: string | null
+          solicitante_id?: string | null
+          status?: string | null
+          tipo?: string
+          unidade_id?: string | null
+          updated_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "system_notifications_created_by_fkey"
-            columns: ["created_by"]
+            foreignKeyName: "suporte_franquia_id_fkey"
+            columns: ["franquia_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "suporte_solicitante_id_fkey"
+            columns: ["solicitante_id"]
+            isOneToOne: false
+            referencedRelation: "usuarios_unidade"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "suporte_unidade_id_fkey"
+            columns: ["unidade_id"]
+            isOneToOne: false
+            referencedRelation: "unidades"
             referencedColumns: ["id"]
           },
         ]
       }
-      system_settings: {
-        Row: {
-          category: string | null
-          created_at: string | null
-          description: string | null
-          id: string
-          is_public: boolean | null
-          key: string
-          updated_at: string | null
-          value: Json
-        }
-        Insert: {
-          category?: string | null
-          created_at?: string | null
-          description?: string | null
-          id?: string
-          is_public?: boolean | null
-          key: string
-          updated_at?: string | null
-          value: Json
-        }
-        Update: {
-          category?: string | null
-          created_at?: string | null
-          description?: string | null
-          id?: string
-          is_public?: boolean | null
-          key?: string
-          updated_at?: string | null
-          value?: Json
-        }
-        Relationships: []
-      }
-      unidade_produtos: {
-        Row: {
-          data_contratacao: string
-          id: string
-          produto_id: string | null
-          status: boolean | null
-          unidade_id: string | null
-        }
-        Insert: {
-          data_contratacao?: string
-          id?: string
-          produto_id?: string | null
-          status?: boolean | null
-          unidade_id?: string | null
-        }
-        Update: {
-          data_contratacao?: string
-          id?: string
-          produto_id?: string | null
-          status?: boolean | null
-          unidade_id?: string | null
-        }
-        Relationships: []
-      }
       unidades: {
         Row: {
-          cnpj: string | null
           codigo: string
-          configuracao_personalizada: Json | null
+          configuracoes: Json | null
           created_at: string | null
+          empresa_id: string | null
           endereco: Json | null
           franquia_id: string | null
           id: string
-          modulos_ativos: string[] | null
+          limites_operacionais: Json | null
+          modulos_ativos: Json | null
           nome: string
-          status: string | null
+          status: Database["public"]["Enums"]["sistema_status"] | null
           updated_at: string | null
         }
         Insert: {
-          cnpj?: string | null
           codigo: string
-          configuracao_personalizada?: Json | null
+          configuracoes?: Json | null
           created_at?: string | null
+          empresa_id?: string | null
           endereco?: Json | null
           franquia_id?: string | null
           id?: string
-          modulos_ativos?: string[] | null
+          limites_operacionais?: Json | null
+          modulos_ativos?: Json | null
           nome: string
-          status?: string | null
+          status?: Database["public"]["Enums"]["sistema_status"] | null
           updated_at?: string | null
         }
         Update: {
-          cnpj?: string | null
           codigo?: string
-          configuracao_personalizada?: Json | null
+          configuracoes?: Json | null
           created_at?: string | null
+          empresa_id?: string | null
           endereco?: Json | null
           franquia_id?: string | null
           id?: string
-          modulos_ativos?: string[] | null
+          limites_operacionais?: Json | null
+          modulos_ativos?: Json | null
           nome?: string
-          status?: string | null
+          status?: Database["public"]["Enums"]["sistema_status"] | null
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "unidades_empresa_id_fkey"
+            columns: ["empresa_id"]
+            isOneToOne: false
+            referencedRelation: "empresas"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "unidades_franquia_id_fkey"
             columns: ["franquia_id"]
@@ -1424,369 +1499,122 @@ export type Database = {
           },
         ]
       }
-      units: {
-        Row: {
-          address: Json | null
-          business_license: string | null
-          code: string | null
-          company_id: string | null
-          compliance_status: string | null
-          configuration: Json | null
-          contact: Json | null
-          created_at: string | null
-          franchise_fee: number | null
-          id: string
-          last_inspection: string | null
-          local_settings: Json | null
-          managers: string[] | null
-          modules: Json | null
-          name: string
-          performance_metrics: Json | null
-          status: string | null
-          territory_bounds: Json | null
-        }
-        Insert: {
-          address?: Json | null
-          business_license?: string | null
-          code?: string | null
-          company_id?: string | null
-          compliance_status?: string | null
-          configuration?: Json | null
-          contact?: Json | null
-          created_at?: string | null
-          franchise_fee?: number | null
-          id?: string
-          last_inspection?: string | null
-          local_settings?: Json | null
-          managers?: string[] | null
-          modules?: Json | null
-          name: string
-          performance_metrics?: Json | null
-          status?: string | null
-          territory_bounds?: Json | null
-        }
-        Update: {
-          address?: Json | null
-          business_license?: string | null
-          code?: string | null
-          company_id?: string | null
-          compliance_status?: string | null
-          configuration?: Json | null
-          contact?: Json | null
-          created_at?: string | null
-          franchise_fee?: number | null
-          id?: string
-          last_inspection?: string | null
-          local_settings?: Json | null
-          managers?: string[] | null
-          modules?: Json | null
-          name?: string
-          performance_metrics?: Json | null
-          status?: string | null
-          territory_bounds?: Json | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "units_company_id_fkey"
-            columns: ["company_id"]
-            isOneToOne: false
-            referencedRelation: "companies"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      user_companies: {
-        Row: {
-          company_key: string
-          created_at: string | null
-          user_id: string
-          webhook: string | null
-        }
-        Insert: {
-          company_key: string
-          created_at?: string | null
-          user_id: string
-          webhook?: string | null
-        }
-        Update: {
-          company_key?: string
-          created_at?: string | null
-          user_id?: string
-          webhook?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_companies_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      user_role_assignments: {
-        Row: {
-          assigned_at: string | null
-          assigned_by: string | null
-          company_id: string | null
-          expires_at: string | null
-          id: string
-          is_active: boolean | null
-          role_id: string
-          unit_id: string | null
-          user_id: string
-        }
-        Insert: {
-          assigned_at?: string | null
-          assigned_by?: string | null
-          company_id?: string | null
-          expires_at?: string | null
-          id?: string
-          is_active?: boolean | null
-          role_id: string
-          unit_id?: string | null
-          user_id: string
-        }
-        Update: {
-          assigned_at?: string | null
-          assigned_by?: string | null
-          company_id?: string | null
-          expires_at?: string | null
-          id?: string
-          is_active?: boolean | null
-          role_id?: string
-          unit_id?: string | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_role_assignments_assigned_by_fkey"
-            columns: ["assigned_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_role_assignments_company_id_fkey"
-            columns: ["company_id"]
-            isOneToOne: false
-            referencedRelation: "companies"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_role_assignments_role_id_fkey"
-            columns: ["role_id"]
-            isOneToOne: false
-            referencedRelation: "custom_roles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_role_assignments_unit_id_fkey"
-            columns: ["unit_id"]
-            isOneToOne: false
-            referencedRelation: "units"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_role_assignments_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      user_roles: {
-        Row: {
-          company_id: string | null
-          created_at: string | null
-          id: string
-          role: string
-          unit_id: string | null
-          updated_at: string | null
-          user_id: string
-        }
-        Insert: {
-          company_id?: string | null
-          created_at?: string | null
-          id?: string
-          role: string
-          unit_id?: string | null
-          updated_at?: string | null
-          user_id: string
-        }
-        Update: {
-          company_id?: string | null
-          created_at?: string | null
-          id?: string
-          role?: string
-          unit_id?: string | null
-          updated_at?: string | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_roles_company_id_fkey"
-            columns: ["company_id"]
-            isOneToOne: false
-            referencedRelation: "companies"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_roles_unit_id_fkey"
-            columns: ["unit_id"]
-            isOneToOne: false
-            referencedRelation: "units"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_roles_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      users: {
-        Row: {
-          active: boolean
-          auth_user_id: string | null
-          created_at: string | null
-          email: string
-          hashed_password: string
-          id: string
-          last_login: string | null
-          nome: string | null
-          role: string
-          unidade_id: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          active?: boolean
-          auth_user_id?: string | null
-          created_at?: string | null
-          email: string
-          hashed_password: string
-          id?: string
-          last_login?: string | null
-          nome?: string | null
-          role?: string
-          unidade_id?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          active?: boolean
-          auth_user_id?: string | null
-          created_at?: string | null
-          email?: string
-          hashed_password?: string
-          id?: string
-          last_login?: string | null
-          nome?: string | null
-          role?: string
-          unidade_id?: string | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      usuarios: {
+      usuarios_franquia: {
         Row: {
           ativo: boolean | null
+          created_at: string | null
+          email: string
+          empresa_id: string | null
+          franquia_id: string | null
+          id: string
+          nome: string
+          permissoes: Json | null
+          tipo: Database["public"]["Enums"]["usuario_tipo"]
+          unidades_acesso: string[] | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string | null
+          email: string
+          empresa_id?: string | null
+          franquia_id?: string | null
+          id?: string
+          nome: string
+          permissoes?: Json | null
+          tipo: Database["public"]["Enums"]["usuario_tipo"]
+          unidades_acesso?: string[] | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string | null
+          email?: string
+          empresa_id?: string | null
+          franquia_id?: string | null
+          id?: string
+          nome?: string
+          permissoes?: Json | null
+          tipo?: Database["public"]["Enums"]["usuario_tipo"]
+          unidades_acesso?: string[] | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "usuarios_franquia_empresa_id_fkey"
+            columns: ["empresa_id"]
+            isOneToOne: false
+            referencedRelation: "empresas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "usuarios_franquia_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      usuarios_unidade: {
+        Row: {
+          ativo: boolean | null
+          configuracoes: Json | null
           created_at: string | null
           email: string
           franquia_id: string | null
           id: string
           nome: string
           permissoes: Json | null
-          senha_hash: string
-          tipo_usuario: string
-          ultimo_acesso: string | null
+          tipo: Database["public"]["Enums"]["usuario_tipo"]
           unidade_id: string | null
           updated_at: string | null
+          user_id: string | null
         }
         Insert: {
           ativo?: boolean | null
+          configuracoes?: Json | null
           created_at?: string | null
           email: string
           franquia_id?: string | null
           id?: string
           nome: string
           permissoes?: Json | null
-          senha_hash: string
-          tipo_usuario: string
-          ultimo_acesso?: string | null
+          tipo: Database["public"]["Enums"]["usuario_tipo"]
           unidade_id?: string | null
           updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
           ativo?: boolean | null
+          configuracoes?: Json | null
           created_at?: string | null
           email?: string
           franquia_id?: string | null
           id?: string
           nome?: string
           permissoes?: Json | null
-          senha_hash?: string
-          tipo_usuario?: string
-          ultimo_acesso?: string | null
+          tipo?: Database["public"]["Enums"]["usuario_tipo"]
           unidade_id?: string | null
           updated_at?: string | null
+          user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "usuarios_franquia_id_fkey"
+            foreignKeyName: "usuarios_unidade_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "usuarios_unidade_id_fkey"
+            foreignKeyName: "usuarios_unidade_unidade_id_fkey"
             columns: ["unidade_id"]
             isOneToOne: false
             referencedRelation: "unidades"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      vendas_comerciais: {
-        Row: {
-          created_at: string | null
-          data_venda: string | null
-          franquia_id: string | null
-          id: string
-          mes_referencia: string | null
-          status: string | null
-          tipo_venda: string | null
-          valor_venda: number | null
-        }
-        Insert: {
-          created_at?: string | null
-          data_venda?: string | null
-          franquia_id?: string | null
-          id?: string
-          mes_referencia?: string | null
-          status?: string | null
-          tipo_venda?: string | null
-          valor_venda?: number | null
-        }
-        Update: {
-          created_at?: string | null
-          data_venda?: string | null
-          franquia_id?: string | null
-          id?: string
-          mes_referencia?: string | null
-          status?: string | null
-          tipo_venda?: string | null
-          valor_venda?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "vendas_comerciais_franquia_id_fkey"
-            columns: ["franquia_id"]
-            isOneToOne: false
-            referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
         ]
@@ -1796,215 +1624,77 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      activate_module: {
-        Args: {
-          p_module_key: string
-          p_company_id: string
-          p_unit_id?: string
-          p_config?: Json
-        }
+      daitch_mokotoff: {
+        Args: { "": string }
+        Returns: string[]
+      }
+      dmetaphone: {
+        Args: { "": string }
         Returns: string
       }
-      add_company_member: {
-        Args: { p_user_id: string; p_company_id: string; p_role?: string }
-        Returns: Json
-      }
-      add_unit_member: {
-        Args: { p_user_id: string; p_unit_id: string; p_role?: string }
-        Returns: Json
-      }
-      assign_user_role: {
-        Args: {
-          p_user_id: string
-          p_role_id: string
-          p_company_id?: string
-          p_unit_id?: string
-          p_action?: string
-        }
-        Returns: Json
-      }
-      authenticate_user: {
-        Args: { email: string; password: string }
-        Returns: Json
-      }
-      check_company_permission: {
-        Args: {
-          user_id: string
-          company_id: string
-          min_permission_level: number
-        }
-        Returns: boolean
-      }
-      check_module_permission: {
-        Args: {
-          user_id: string
-          module_id: string
-          company_id: string
-          unit_id: string
-          permission: string
-        }
-        Returns: boolean
-      }
-      check_unit_permission: {
-        Args: { user_id: string; unit_id: string; min_permission_level: number }
-        Returns: boolean
-      }
-      create_franchise_subscription: {
-        Args: { p_company_id: string; p_plan_id: string; p_expires_at?: string }
-        Returns: Json
-      }
-      create_user: {
-        Args: {
-          p_email: string
-          p_password: string
-          p_nome: string
-          p_role?: string
-          p_unidade_id?: string
-        }
-        Returns: Json
-      }
-      get_audit_logs: {
-        Args: {
-          p_limit?: number
-          p_offset?: number
-          p_entity_type?: string
-          p_company_id?: string
-        }
-        Returns: Json
-      }
-      get_company_info: {
-        Args: { p_company_id: string }
-        Returns: Json
-      }
-      get_franchise_details: {
-        Args: { p_company_id: string }
-        Returns: Json
-      }
-      get_franchise_plans: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      get_system_settings: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      get_unit_info: {
-        Args: { p_unit_id: string }
-        Returns: Json
-      }
-      get_user_companies: {
-        Args: { p_user_id: string }
-        Returns: Json
-      }
-      get_user_notifications: {
-        Args: { p_user_id: string; p_limit?: number }
-        Returns: Json
-      }
-      get_user_unit: {
-        Args: Record<PropertyKey, never>
+      dmetaphone_alt: {
+        Args: { "": string }
         Returns: string
       }
-      get_user_units: {
-        Args: { p_user_id: string }
-        Returns: Json
+      gtrgm_compress: {
+        Args: { "": unknown }
+        Returns: unknown
       }
-      is_super_admin: {
-        Args: { _user_id: string }
-        Returns: boolean
+      gtrgm_decompress: {
+        Args: { "": unknown }
+        Returns: unknown
       }
-      log_audit: {
-        Args: {
-          p_action: string
-          p_entity_type: string
-          p_entity_id?: string
-          p_old_data?: Json
-          p_new_data?: Json
-          p_company_id?: string
-          p_unit_id?: string
-        }
-        Returns: string
+      gtrgm_in: {
+        Args: { "": unknown }
+        Returns: unknown
       }
-      manage_custom_role: {
-        Args: {
-          p_action: string
-          p_role_id?: string
-          p_company_id?: string
-          p_unit_id?: string
-          p_name?: string
-          p_description?: string
-          p_permissions?: Json
-        }
-        Returns: Json
+      gtrgm_options: {
+        Args: { "": unknown }
+        Returns: undefined
       }
-      mark_notification_read: {
-        Args: { p_notification_id: string; p_read?: boolean }
-        Returns: boolean
+      gtrgm_out: {
+        Args: { "": unknown }
+        Returns: unknown
       }
-      migrate_recruitment_data: {
+      set_limit: {
+        Args: { "": number }
+        Returns: number
+      }
+      show_limit: {
         Args: Record<PropertyKey, never>
         Returns: number
       }
-      migrate_status_data: {
-        Args: Record<PropertyKey, never>
-        Returns: number
+      show_trgm: {
+        Args: { "": string }
+        Returns: string[]
       }
-      send_notification: {
-        Args: {
-          p_user_id: string
-          p_title: string
-          p_message: string
-          p_type?: string
-          p_data?: Json
-          p_action_url?: string
-        }
+      soundex: {
+        Args: { "": string }
         Returns: string
       }
-      super_admin_create_company: {
+      text_soundex: {
+        Args: { "": string }
+        Returns: string
+      }
+      validate_mcp_access: {
         Args: {
-          p_name: string
-          p_key: string
-          p_document?: string
-          p_plan?: string
+          endpoint_name: string
+          user_level: Database["public"]["Enums"]["nivel_acesso"]
         }
-        Returns: Json
-      }
-      super_admin_create_unit: {
-        Args: { p_name: string; p_company_id: string; p_code?: string }
-        Returns: Json
-      }
-      super_admin_create_user: {
-        Args: {
-          p_email: string
-          p_nome: string
-          p_role: string
-          p_password: string
-        }
-        Returns: Json
-      }
-      super_admin_get_companies: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      super_admin_get_units: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      super_admin_get_users: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      update_system_setting: {
-        Args: { p_key: string; p_value: Json; p_description?: string }
-        Returns: Json
-      }
-      user_has_role_in_unit: {
-        Args: { required_role: string; target_unit_id: string }
         Returns: boolean
       }
     }
     Enums: {
-      app_role: "super_admin" | "manager" | "attendant"
-      user_role: "super_admin" | "manager" | "attendant"
+      nivel_acesso: "dromeflow" | "admin" | "mariaflow"
+      plano_tipo: "basico" | "profissional" | "empresarial" | "enterprise"
+      sistema_status: "ativo" | "inativo" | "suspenso" | "em_manutencao"
+      usuario_tipo:
+        | "super_admin"
+        | "franquia_admin"
+        | "consultor"
+        | "unidade_admin"
+        | "operador"
+        | "viewer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2012,21 +1702,25 @@ export type Database = {
   }
 }
 
-type DefaultSchema = Database[Extract<keyof Database, "public">]
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-        Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-      Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
@@ -2044,14 +1738,16 @@ export type Tables<
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
@@ -2067,14 +1763,16 @@ export type TablesInsert<
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
@@ -2090,14 +1788,16 @@ export type TablesUpdate<
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
-> = DefaultSchemaEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
@@ -2105,14 +1805,16 @@ export type Enums<
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
-> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
     ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
@@ -2120,8 +1822,17 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["super_admin", "manager", "attendant"],
-      user_role: ["super_admin", "manager", "attendant"],
+      nivel_acesso: ["dromeflow", "admin", "mariaflow"],
+      plano_tipo: ["basico", "profissional", "empresarial", "enterprise"],
+      sistema_status: ["ativo", "inativo", "suspenso", "em_manutencao"],
+      usuario_tipo: [
+        "super_admin",
+        "franquia_admin",
+        "consultor",
+        "unidade_admin",
+        "operador",
+        "viewer",
+      ],
     },
   },
 } as const
